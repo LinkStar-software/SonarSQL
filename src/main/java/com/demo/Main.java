@@ -20,13 +20,10 @@ public class Main {
         SpringApplication.run(Main.class, args);
     }
 
-    @GetMapping("/buscar")
-    public String buscar(@RequestParam String nombre) {
 
-        // Vulnerabilidad intencional: SQL Injection
-        String sql = "SELECT nombre FROM usuarios WHERE nombre = '"
-                + nombre + "'";
-
-        return db.queryForList(sql, String.class).toString();
-    }
+@GetMapping("/buscar")
+public String buscar(@RequestParam String nombre) {
+    String sql = "SELECT nombre FROM usuarios WHERE nombre = ?";
+    return db.queryForList(sql, String.class, nombre).toString();
+}
 }
